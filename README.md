@@ -24,7 +24,7 @@ Windows
 
 http://fceux.com/web/download.html
 
-http://files.luaforge.net/releases/luasocket/luasocket/luasocket-2.0.2
+http://files.luaforge.net/releases/luasocket/luasocket/luasocket-2.0.2/luasocket-2.0.2-lua-5.1.2-Win32-vc8.zip
 
 (Copy Lua socket files to FCEUX's directory)
 
