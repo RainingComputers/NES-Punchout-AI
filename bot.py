@@ -121,59 +121,60 @@ def start_server(A_val, left_val):
     print(server.info)
     server.start()
 
-p = mp.Process(target=start_server, args=(A_val, left_val))
-p.start()
+if __name__ == '__main__':
+    p = mp.Process(target=start_server, args=(A_val, left_val))
+    p.start()
 
-# Load models
-pca = pk.load('pca.pkl')
-model = pk.load('best.pkl')
-last_render = time.time()
-dps = 0
+    # Load models
+    pca = pk.load('pca.pkl')
+    model = pk.load('best.pkl')
+    last_render = time.time()
+    dps = 0
 
-with mss.mss() as sct:
-    # Part of the screen to capture (1548, 203, 256, 256) for 1080p screen
-    monitor = {"top": 203, "left": infoObject.current_w-256-116, "width": 256, "height": 256}
-        
-    running = True
-    while running:    
-        last_time = time.time()
+    with mss.mss() as sct:
+        # Part of the screen to capture (1548, 203, 256, 256) for 1080p screen
+        monitor = {"top": 203, "left": infoObject.current_w-256-116, "width": 256, "height": 256}
 
-        # Get raw pixels from the screen, save it to a Numpy array
-        img = np.array(sct.grab(monitor))
-        # Convert to gray scale
-        img = cv2.cvtColor(img, cv2.COLOR_BGRA2GRAY)
-        # Resize image
-        img = cv2.resize(src=img, dsize=(64, 64))
-        img_surf = np2surf(img, (128, 128))
-        # Reshape
-        img = img.reshape(4096)
-        # Normalize
-        img = img/255
+        running = True
+        while running:    
+            last_time = time.time()
 
-        # PCA
-        img = pca.transform(img)
-        pca_surf = np2surf(img.reshape(2, 32), (256, 16))
-        # Feed to model
-        model.feed(img)
-        A_val.value, left_val.value, _ = model.get_output_onehot()
+            # Get raw pixels from the screen, save it to a Numpy array
+            img = np.array(sct.grab(monitor))
+            # Convert to gray scale
+            img = cv2.cvtColor(img, cv2.COLOR_BGRA2GRAY)
+            # Resize image
+            img = cv2.resize(src=img, dsize=(64, 64))
+            img_surf = np2surf(img, (128, 128))
+            # Reshape
+            img = img.reshape(4096)
+            # Normalize
+            img = img/255
 
-        # Render model visualization, limit to 30fps
-        if(time.time() - last_render > 1/30):
-            # Render visualization
-            last_render = time.time()
-            show_model(img_surf, pca_surf, model, round(dps, 2))
-            pygame.display.update()
+            # PCA
+            img = pca.transform(img)
+            pca_surf = np2surf(img.reshape(2, 32), (256, 16))
+            # Feed to model
+            model.feed(img)
+            A_val.value, left_val.value, _ = model.get_output_onehot()
 
-            # Handle quit event
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    p.kill()
-                    running = False
+            # Render model visualization, limit to 30fps
+            if(time.time() - last_render > 1/30):
+                # Render visualization
+                last_render = time.time()
+                show_model(img_surf, pca_surf, model, round(dps, 2))
+                pygame.display.update()
 
-        # Calculate up/sec
-        delta = time.time() - last_time
-        dps = 1/delta
+                # Handle quit event
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        p.kill()
+                        running = False
+
+            # Calculate up/sec
+            delta = time.time() - last_time
+            dps = 1/delta
 
 
 

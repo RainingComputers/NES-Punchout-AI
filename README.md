@@ -11,21 +11,28 @@ LSTM Network trained to play [Punchout](https://en.wikipedia.org/wiki/Punch-Out!
 ```python3 -m pip install -r requirements.txt```
 
 
-### Install FCEUX NES Emulator
+### Install FCEUX NES Emulator and Lua Socket
 
 Ubuntu/Debian
 
-```sudo apt-get install fceux```
+```
+sudo apt-get install fceux`
+sudo apt-get install lua5.1-socket
+```
 
 Windows
 
 http://fceux.com/web/download.html
+http://files.luaforge.net/releases/luasocket/luasocket/luasocket-2.0.2
+
 
 ### Run 
 
 + Start script, `python3 bot.py`
 
 + Start Fceux
+
++ Option > Video Config > Set X and Y Scale to 2.0
 
 + File > Open ROM, browse to `punchout_rom.nes`
 
