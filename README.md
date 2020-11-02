@@ -16,7 +16,7 @@ LSTM Network trained to play [Punchout](https://en.wikipedia.org/wiki/Punch-Out!
 Ubuntu/Debian
 
 ```
-sudo apt-get install fceux`
+sudo apt-get install fceux
 sudo apt-get install lua5.1-socket
 ```
 
