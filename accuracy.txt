@@ -1,0 +1,6 @@
+Best params: [0.0009597598242253381, 0.9520356108456691, 90]
+Best cost: 1.05
+Train Accuracy: 74.71
+Test Accuracy: 72.24
+Dev Accuracy: 72.96
+

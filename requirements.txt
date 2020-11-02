@@ -1,0 +1,4 @@
+pykitml
+mss
+opencv-python
+pygame
