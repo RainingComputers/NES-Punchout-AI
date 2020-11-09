@@ -17,24 +17,6 @@ import pygame.freetype
 A_val = mp.Value('d', 0)
 left_val = mp.Value('d', 0) 
 
-# Initialize pygame
-pygame.init()
-infoObject = pygame.display.Info()
-display = pygame.display.set_mode((500, 400))
-pygame.display.set_caption('Mac AI')
-font = pygame.font.SysFont('courier', 16, bold=1)
-
-# Initialize labels
-inp_txt = font.render('inp', True, pygame.Color('white'))
-pca_txt = font.render('pca', True, pygame.Color('white'))
-z_txt = font.render('z', True, pygame.Color('white'))
-i_txt = font.render('i', True, pygame.Color('white'))
-f_txt = font.render('f', True, pygame.Color('white'))
-o_txt = font.render('o', True, pygame.Color('white'))
-c_txt = font.render('c', True, pygame.Color('white'))
-y_txt = font.render('y', True, pygame.Color('white'))
-out_txt = font.render('out', True, pygame.Color('white'))
-
 def on_frame(server, frame, A_val, left_val): 
     # Toggle start button to start rounds
     if(frame%10 < 5): start = True
@@ -124,6 +106,24 @@ def start_server(A_val, left_val):
 if __name__ == '__main__':
     p = mp.Process(target=start_server, args=(A_val, left_val))
     p.start()
+
+    # Initialize pygame
+    pygame.init()
+    infoObject = pygame.display.Info()
+    display = pygame.display.set_mode((500, 400))
+    pygame.display.set_caption('Mac AI')
+    font = pygame.font.SysFont('courier', 16, bold=1)
+    
+    # Initialize labels
+    inp_txt = font.render('inp', True, pygame.Color('white'))
+    pca_txt = font.render('pca', True, pygame.Color('white'))
+    z_txt = font.render('z', True, pygame.Color('white'))
+    i_txt = font.render('i', True, pygame.Color('white'))
+    f_txt = font.render('f', True, pygame.Color('white'))
+    o_txt = font.render('o', True, pygame.Color('white'))
+    c_txt = font.render('c', True, pygame.Color('white'))
+    y_txt = font.render('y', True, pygame.Color('white'))
+    out_txt = font.render('out', True, pygame.Color('white'))
 
     # Load models
     pca = pk.load('pca.pkl')
